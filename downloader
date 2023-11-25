@@ -1,0 +1,28 @@
+#!/bin/sh
+
+echo
+echo "Download ZIPs..."
+echo
+
+cd plugins;
+
+echo
+echo "Delete old files"
+jq '.[] | .slug' ../ranges/50k.json | xargs rm -r
+
+
+echo
+echo "Download ZIPs..."
+jq '.[] | .download_link' ../ranges/50k.json | xargs wget
+
+
+echo
+echo "Extract ZIPs..."
+unzip
+
+
+echo
+echo "Deleting ZIPs..."
+rm *.zip
+
+cd ../
