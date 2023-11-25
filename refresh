@@ -1,0 +1,14 @@
+#!/bin/sh
+
+echo
+echo "Prepare fetching data..."
+echo
+
+node get-plugin-data.js
+
+echo
+echo "Extracting sets..."
+echo
+
+jq 'map(select(.active_installs > 50000))' data/plugins.json > ranges/50k.json
+jq 'map(select(.active_installs >= 40000 and .active_installs < 50000))' data/plugins.json > ranges/50k-almost.json
